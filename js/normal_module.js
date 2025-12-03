@@ -380,6 +380,8 @@ function calculateGearDimensions() {
         if (isFinite(d0)) {
             if (gearNum === 1) {
                 localStorage.setItem('lastD0_1', d0.toFixed(3));
+            } else if (gearNum === 2) {
+                localStorage.setItem('lastD0_2', d0.toFixed(3));
             } else if (gearNum === 3) {
                 localStorage.setItem('lastD0_3', d0.toFixed(3));
             }

@@ -69,6 +69,11 @@
                     <small style="color: var(--text-secondary);">Son D<sub>0,1</sub>: <span id="hint-d0-1">-</span></small>
                 </div>
                 <div class="input-group">
+                    <label for="d0-2-input">D<sub>0,2</sub> (Taksimat Çapı) [mm]</label>
+                    <input type="number" id="d0-2-input" step="0.001" placeholder="dim-d0-2 (Fr/Fe momenti için)">
+                    <small style="color: var(--text-secondary);">Son D<sub>0,2</sub>: <span id="hint-d0-2">-</span></small>
+                </div>
+                <div class="input-group">
                     <label for="beta0-input">β<sub>0</sub> [°]</label>
                     <input type="number" id="beta0-input" step="0.01" placeholder="İlk helis açısı (beta0)">
                     <small style="color: var(--text-secondary);">Son β<sub>0</sub>: <span id="hint-beta0">-</span></small>
@@ -81,7 +86,7 @@
                 </div>
             </div>
 
-            <button id="calc-force-1" class="btn btn-primary" style="margin-top: 1rem;">Kuvvetleri Hesapla (1. Kademe)</button>
+            <p class="subtitle" style="margin-top: 0.75rem; color: var(--success);">Girdiler doluysa Ft/Fr/Fe otomatik hesaplanır.</p>
         </div>
 
         <div class="section-label" style="margin-top: 2rem;">2. Kademe Kuvvetleri (Md<sub>2</sub>, β<sub>0,2</sub>)</div>
@@ -128,7 +133,45 @@
                 </div>
             </div>
 
-            <button id="calc-force-2" class="btn btn-primary" style="margin-top: 1rem;">Kuvvetleri Hesapla (2. Kademe)</button>
+            <p class="subtitle" style="margin-top: 0.75rem; color: var(--success);">Girdiler doluysa Ft/Fr/Fe otomatik hesaplanır.</p>
+        </div>
+
+        <div class="section-label" style="margin-top: 2rem;">Destek Reaksiyonları</div>
+        <div class="card" style="margin-top: 0.75rem;">
+            <h2 style="margin-bottom: 0.5rem;">F<sub>bx</sub> ve F<sub>ax</sub></h2>
+            <p class="subtitle" style="margin-bottom: 1.25rem;">
+                Fbx*(l1+l2+l3)+Fe<sub>2</sub>*(D<sub>0,3</sub>/2)-Fr<sub>2</sub>*(l1+l2)+Fe<sub>1</sub>*(D<sub>0,2</sub>/2)+Fr<sub>1</sub>*l1=0 <br>
+                Fax+Fr<sub>1</sub>+Fbx-Fr<sub>2</sub>=0
+            </p>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>bx</sub></span>
+                    <span class="summary-value" id="res-fbx">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>ax</sub></span>
+                    <span class="summary-value" id="res-fax">-</span>
+                </div>
+            </div>
+
+            <div class="form-grid" style="margin-top: 1rem;">
+                <div class="input-group">
+                    <label for="l1-input">l<sub>1</sub> [mm]</label>
+                    <input type="number" id="l1-input" step="0.001" placeholder="l1">
+                </div>
+                <div class="input-group">
+                    <label for="l2-input">l<sub>2</sub> [mm]</label>
+                    <input type="number" id="l2-input" step="0.001" placeholder="l2">
+                </div>
+                <div class="input-group">
+                    <label for="l3-input">l<sub>3</sub> [mm]</label>
+                    <input type="number" id="l3-input" step="0.001" placeholder="l3">
+                </div>
+            </div>
+
+            <button id="calc-support" class="btn btn-primary" style="margin-top: 1rem;">Fbx / Fax Hesapla</button>
+            <p id="fbx-note" class="subtitle" style="color: var(--accent); margin-top: 0.75rem;"></p>
         </div>
     </div>
 
