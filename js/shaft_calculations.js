@@ -45,7 +45,6 @@ const standardLengths = [30, 40, 50, 60, 80, 110, 140, 170, 210, 250, 300, 350];
 const TAU_EM = 36;
 const KEYWAY_CONSTANTS = {
     pG: 1500,
-    tauOk: 35,
     tauOf: 380,
     roundStep: 5
 };
@@ -137,6 +136,7 @@ const shaftCardConfigs = [
         summarySolidId: 'summary-solid2',
         keyway: {
             btnId: 'calc-keyway-btn',
+            tauOk: 32,  // 2. Dişli için
             outputs: {
                 range: 'keyway-range',
                 bh: 'keyway-bh',
@@ -194,6 +194,7 @@ const shaftCardConfigs = [
         ,
         keyway: {
             btnId: 'calc-keyway-btn-3',
+            tauOk: 38,  // 4. Dişli için
             outputs: {
                 range: 'keyway-range-3',
                 bh: 'keyway-bh-3',
@@ -587,8 +588,10 @@ function calculateKeywaySizing(config) {
     }
     const Ft = Mb / (usedD / 2);
 
+    const tauOk = config.keyway.tauOk || 32;  // Default to 32 if not specified
+
     const Lpg = Ft / (KEYWAY_CONSTANTS.pG * row.t2);
-    const Ltau32 = Ft / (KEYWAY_CONSTANTS.tauOk * row.b);
+    const Ltau32 = Ft / (tauOk * row.b);
     const Ltau380 = Ft / (KEYWAY_CONSTANTS.tauOf * row.b);
 
     const maxL = Math.max(Lpg, Ltau32, Ltau380);
