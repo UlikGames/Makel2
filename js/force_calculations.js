@@ -14,24 +14,17 @@ const forceState = {
 document.addEventListener('DOMContentLoaded', () => {
     prefillFromStorage();
     wireHandlers();
-    autoCalculateForces();
 });
 
 function wireHandlers() {
     const btnSupport = document.getElementById('calc-support');
     if (btnSupport) btnSupport.addEventListener('click', calculateSupportForces);
 
-    // Recalculate forces automatically on input change
-    const autoInputs = [
-        'md1-input-force', 'd0-1-input', 'beta0-input',
-        'md2-input-force', 'd0-3-input', 'beta0-2-input'
-    ];
-    autoInputs.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('input', () => autoCalculateForces());
-        }
-    });
+    const btnForce1 = document.getElementById('calc-force-1');
+    if (btnForce1) btnForce1.addEventListener('click', () => calculateForceSet(forceConfig(1)));
+
+    const btnForce2 = document.getElementById('calc-force-2');
+    if (btnForce2) btnForce2.addEventListener('click', () => calculateForceSet(forceConfig(2)));
 }
 
 function prefillFromStorage() {
@@ -143,14 +136,22 @@ function updateResult(id, val) {
     }
 }
 
+function updateSupportResult(id, val) {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    if (!isFinite(val)) {
+        el.textContent = '-';
+        return;
+    }
+
+    const note = val < 0 ? " (yönü ters)" : "";
+    el.textContent = `${val.toFixed(3)} N${note}`;
+}
+
 function setHint(id, text) {
     const el = document.getElementById(id);
     if (el) el.textContent = text;
-}
-
-function autoCalculateForces() {
-    calculateForceSetWithOptions(forceConfig(1), { silent: true });
-    calculateForceSetWithOptions(forceConfig(2), { silent: true });
 }
 
 function calculateSupportForces() {
@@ -160,39 +161,41 @@ function calculateSupportForces() {
     const d02 = parseFloat(document.getElementById('d0-2-input')?.value);
     const d03 = parseFloat(document.getElementById('d0-3-input')?.value);
 
-    const missingForce = [forceState.fe1, forceState.fr1, forceState.fe2, forceState.fr2].some(val => !isFinite(val));
+    const missingForce = [
+        forceState.ft1, forceState.fr1, forceState.fe1,
+        forceState.ft2, forceState.fr2, forceState.fe2
+    ].some(val => !isFinite(val));
 
     if ([l1, l2, l3, d02, d03].some(val => isNaN(val)) || !isFinite(d02) || !isFinite(d03)) {
         alert("Lütfen l1, l2, l3, D0,2 ve D0,3 değerlerini girin.");
         return;
     }
 
-    if ((l1 + l2 + l3) === 0) {
+    const totalLength = l1 + l2 + l3;
+    if (totalLength === 0) {
         alert("l1 + l2 + l3 toplamı sıfır olamaz.");
         return;
     }
 
     if (missingForce) {
-        alert("Önce Ft/Fr/Fe sonuçlarını hesaplayın (1. ve 2. kademe).");
+        alert("Önce 1. ve 2. kademede Ft/Fr/Fe hesaplarını yapın.");
         return;
     }
 
     // Moment dengesi: Fbx*(l1+l2+l3)+Fe2*(d03/2)-Fr2*(l1+l2)+Fe1*(d02/2)+Fr1*l1=0
     const momentTerm = forceState.fe2 * (d03 / 2) - forceState.fr2 * (l1 + l2) + forceState.fe1 * (d02 / 2) + forceState.fr1 * l1;
-    const Fbx = -momentTerm / (l1 + l2 + l3);
+    const Fbx = -momentTerm / totalLength;
 
     // Dikey kuvvet dengesi: Fax+Fr1+Fbx-Fr2=0 => Fax = Fr2 - Fr1 - Fbx
     const Fax = forceState.fr2 - forceState.fr1 - Fbx;
 
-    updateResult('res-fbx', Fbx);
-    updateResult('res-fax', Fax);
+    // Y yönü moment ve kuvvet dengeleri
+    const FbyNumerator = (forceState.ft2 * (l1 + l2)) + (forceState.ft1 * l1);
+    const Fby = FbyNumerator / totalLength;
+    const Fay = forceState.ft1 + forceState.ft2 - Fby;
 
-    const note = document.getElementById('fbx-note');
-    if (note) {
-        if (isFinite(Fbx) && Fbx < 0) {
-            note.textContent = "Fbx negatif: yön ters.";
-        } else {
-            note.textContent = "";
-        }
-    }
+    updateSupportResult('res-fbx', Fbx);
+    updateSupportResult('res-fax', Fax);
+    updateSupportResult('res-fby', Fby);
+    updateSupportResult('res-fay', Fay);
 }

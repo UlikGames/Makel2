@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <p class="subtitle" style="margin-top: 0.75rem; color: var(--success);">Girdiler doluysa Ft/Fr/Fe otomatik hesaplanır.</p>
+            <button id="calc-force-1" class="btn btn-primary" style="margin-top: 1rem;">Ft<sub>1</sub> / Fr<sub>1</sub> / Fe<sub>1</sub> Hesapla</button>
         </div>
 
         <div class="section-label" style="margin-top: 2rem;">2. Kademe Kuvvetleri (Md<sub>2</sub>, β<sub>0,2</sub>)</div>
@@ -133,15 +133,17 @@
                 </div>
             </div>
 
-            <p class="subtitle" style="margin-top: 0.75rem; color: var(--success);">Girdiler doluysa Ft/Fr/Fe otomatik hesaplanır.</p>
+            <button id="calc-force-2" class="btn btn-primary" style="margin-top: 1rem;">Ft<sub>2</sub> / Fr<sub>2</sub> / Fe<sub>2</sub> Hesapla</button>
         </div>
 
         <div class="section-label" style="margin-top: 2rem;">Destek Reaksiyonları</div>
         <div class="card" style="margin-top: 0.75rem;">
-            <h2 style="margin-bottom: 0.5rem;">F<sub>bx</sub> ve F<sub>ax</sub></h2>
+            <h2 style="margin-bottom: 0.5rem;">F<sub>bx</sub>, F<sub>ax</sub>, F<sub>by</sub>, F<sub>ay</sub></h2>
             <p class="subtitle" style="margin-bottom: 1.25rem;">
                 Fbx*(l1+l2+l3)+Fe<sub>2</sub>*(D<sub>0,3</sub>/2)-Fr<sub>2</sub>*(l1+l2)+Fe<sub>1</sub>*(D<sub>0,2</sub>/2)+Fr<sub>1</sub>*l1=0 <br>
-                Fax+Fr<sub>1</sub>+Fbx-Fr<sub>2</sub>=0
+                Fax+Fr<sub>1</sub>+Fbx-Fr<sub>2</sub>=0 <br>
+                -Fby*(l1+l2+l3)+Ft<sub>2</sub>*(l1+l2)+Ft<sub>1</sub>*l1=0 <br>
+                Fay-Ft<sub>1</sub>-Ft<sub>2</sub>+Fby=0
             </p>
 
             <div class="summary-strip">
@@ -152,6 +154,14 @@
                 <div class="summary-badge">
                     <span class="summary-label">F<sub>ax</sub></span>
                     <span class="summary-value" id="res-fax">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>by</sub></span>
+                    <span class="summary-value" id="res-fby">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>ay</sub></span>
+                    <span class="summary-value" id="res-fay">-</span>
                 </div>
             </div>
 
@@ -170,8 +180,7 @@
                 </div>
             </div>
 
-            <button id="calc-support" class="btn btn-primary" style="margin-top: 1rem;">Fbx / Fax Hesapla</button>
-            <p id="fbx-note" class="subtitle" style="color: var(--accent); margin-top: 0.75rem;"></p>
+            <button id="calc-support" class="btn btn-primary" style="margin-top: 1rem;">Fbx / Fax / Fby / Fay Hesapla</button>
         </div>
     </div>
 
