@@ -40,7 +40,6 @@
         <div class="section-label">1. Kademe Kuvvetleri (Md<sub>1</sub>, β<sub>0</sub>)</div>
         <div class="card" style="margin-top: 0.75rem;">
             <h2 style="margin-bottom: 0.5rem;">Ft<sub>1</sub>, Fr<sub>1</sub>, Fe<sub>1</sub></h2>
-            <p class="subtitle" style="margin-bottom: 1.5rem;">M<sub>d1</sub> (res-Md1) ve D<sub>0,1</sub> (dim-d0-1) ile</p>
 
             <div class="summary-strip">
                 <div class="summary-badge">
@@ -92,7 +91,6 @@
         <div class="section-label" style="margin-top: 2rem;">2. Kademe Kuvvetleri (Md<sub>2</sub>, β<sub>0,2</sub>)</div>
         <div class="card" style="margin-top: 0.75rem;">
             <h2 style="margin-bottom: 0.5rem;">Ft<sub>2</sub>, Fr<sub>2</sub>, Fe<sub>2</sub></h2>
-            <p class="subtitle" style="margin-bottom: 1.5rem;">M<sub>d2</sub> (res-Md3) ve D<sub>0,3</sub> (dim-d0-3) ile</p>
 
             <div class="summary-strip">
                 <div class="summary-badge">
@@ -143,7 +141,8 @@
                 Fbx*(l1+l2+l3)+Fe<sub>2</sub>*(D<sub>0,3</sub>/2)-Fr<sub>2</sub>*(l1+l2)+Fe<sub>1</sub>*(D<sub>0,2</sub>/2)+Fr<sub>1</sub>*l1=0 <br>
                 Fax+Fr<sub>1</sub>+Fbx-Fr<sub>2</sub>=0 <br>
                 -Fby*(l1+l2+l3)+Ft<sub>2</sub>*(l1+l2)+Ft<sub>1</sub>*l1=0 <br>
-                Fay-Ft<sub>1</sub>-Ft<sub>2</sub>+Fby=0
+                Fay-Ft<sub>1</sub>-Ft<sub>2</sub>+Fby=0 <br>
+                Fb = √(Fbx² + Fby²), Fa = √(Fax² + Fay²)
             </p>
 
             <div class="summary-strip">
@@ -162,6 +161,14 @@
                 <div class="summary-badge">
                     <span class="summary-label">F<sub>ay</sub></span>
                     <span class="summary-value" id="res-fay">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>b</sub></span>
+                    <span class="summary-value" id="res-fb">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>a</sub></span>
+                    <span class="summary-value" id="res-fa">-</span>
                 </div>
             </div>
 

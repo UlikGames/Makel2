@@ -198,4 +198,10 @@ function calculateSupportForces() {
     updateSupportResult('res-fax', Fax);
     updateSupportResult('res-fby', Fby);
     updateSupportResult('res-fay', Fay);
+
+    // Bileşke kuvvetler
+    const Fb = Math.sqrt(Math.pow(Fbx, 2) + Math.pow(Fby, 2));
+    const Fa = Math.sqrt(Math.pow(Fax, 2) + Math.pow(Fay, 2));
+    updateSupportResult('res-fb', Fb);
+    updateSupportResult('res-fa', Fa);
 }

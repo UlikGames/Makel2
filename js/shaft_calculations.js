@@ -43,6 +43,32 @@ const standardLengths = [30, 40, 50, 60, 80, 110, 140, 170, 210, 250, 300, 350];
 
 // Allowable shear stress (MPa)
 const TAU_EM = 36;
+const KEYWAY_CONSTANTS = {
+    pG: 1500,
+    tauOk: 35,
+    tauOf: 380,
+    roundStep: 5
+};
+
+const keywayTable = [
+    { minD: 8, maxD: 10, b: 3, h: 3, t1: 1.8, t2: 1.4, lMin: 6, lMax: 36, tol: '+0.1' },
+    { minD: 11, maxD: 12, b: 4, h: 4, t1: 2.5, t2: 1.8, lMin: 8, lMax: 45, tol: '+0.1' },
+    { minD: 13, maxD: 17, b: 5, h: 5, t1: 3.0, t2: 2.3, lMin: 10, lMax: 56, tol: '+0.1' },
+    { minD: 18, maxD: 22, b: 6, h: 6, t1: 3.5, t2: 2.8, lMin: 14, lMax: 70, tol: '+0.1' },
+    { minD: 23, maxD: 30, b: 8, h: 7, t1: 4.0, t2: 3.3, lMin: 18, lMax: 90, tol: '+0.2' },
+    { minD: 31, maxD: 38, b: 10, h: 8, t1: 5.0, t2: 3.3, lMin: 20, lMax: 110, tol: '+0.2' },
+    { minD: 39, maxD: 44, b: 12, h: 8, t1: 5.0, t2: 3.3, lMin: 28, lMax: 140, tol: '+0.2' },
+    { minD: 45, maxD: 50, b: 14, h: 9, t1: 5.5, t2: 3.8, lMin: 36, lMax: 160, tol: '+0.2' },
+    { minD: 51, maxD: 58, b: 16, h: 10, t1: 6.0, t2: 4.3, lMin: 45, lMax: 180, tol: '+0.2' },
+    { minD: 59, maxD: 65, b: 18, h: 11, t1: 7.0, t2: 4.4, lMin: 50, lMax: 200, tol: '+0.2' },
+    { minD: 66, maxD: 75, b: 20, h: 12, t1: 7.5, t2: 4.9, lMin: 56, lMax: 250, tol: '+0.2' },
+    { minD: 76, maxD: 85, b: 22, h: 14, t1: 9.0, t2: 5.4, lMin: 63, lMax: 250, tol: '+0.2' },
+    { minD: 86, maxD: 95, b: 22, h: 16, t1: 9.0, t2: 5.4, lMin: 70, lMax: 280, tol: '+0.2' },
+    { minD: 96, maxD: 110, b: 28, h: 16, t1: 10.0, t2: 6.4, lMin: 80, lMax: 320, tol: '+0.2' },
+    { minD: 111, maxD: 130, b: 32, h: 18, t1: 11.0, t2: 7.4, lMin: 90, lMax: 360, tol: '+0.2' },
+    { minD: 131, maxD: 150, b: 36, h: 20, t1: 12.0, t2: 8.4, lMin: 100, lMax: 400, tol: '+0.3' },
+    { minD: 151, maxD: 170, b: 40, h: 22, t1: 13.0, t2: 9.4, lMin: 110, lMax: 400, tol: '+0.3' },
+];
 
 // DIN 5462 spline data (nominal dimensions in mm), limited to table slice in the provided sheet.
 const splineProfiles = [
@@ -109,6 +135,27 @@ const shaftCardConfigs = [
         summaryMdId: 'summary-md2-shaft',
         summaryDdisId: 'summary-ddis2',
         summarySolidId: 'summary-solid2',
+        keyway: {
+            btnId: 'calc-keyway-btn',
+            outputs: {
+                range: 'keyway-range',
+                bh: 'keyway-bh',
+                t1: 'keyway-t1',
+                t2: 'keyway-t2',
+                lRange: 'keyway-l-range',
+                dUsed: 'keyway-d-used',
+                ft: 'keyway-ft',
+                lPg: 'keyway-l-pg',
+                lTau32: 'keyway-l-tau32',
+                lTau380: 'keyway-l-tau380',
+                lFinal: 'keyway-l-final'
+            },
+            mbSources: {
+                // Mb = Md2 (normal modül sonucu, k uygulanmadan)
+                ids: ['res-Md3', 'm2-input', 'stored-md2'],
+                storageKeys: ['lastMd2', 'lastMd3']
+            }
+        }
     },
     {
         diameterId: 'shaft3-diameter',
@@ -144,6 +191,28 @@ const shaftCardConfigs = [
             KId: 'spline-K',
             rId: 'spline-r',
         }
+        ,
+        keyway: {
+            btnId: 'calc-keyway-btn-3',
+            outputs: {
+                range: 'keyway-range-3',
+                bh: 'keyway-bh-3',
+                t1: 'keyway-t1-3',
+                t2: 'keyway-t2-3',
+                lRange: 'keyway-l-range-3',
+                dUsed: 'keyway-d-used-3',
+                ft: 'keyway-ft-3',
+                lPg: 'keyway-l-pg-3',
+                lTau32: 'keyway-l-tau32-3',
+                lTau380: 'keyway-l-tau380-3',
+                lFinal: 'keyway-l-final-3'
+            },
+            mbSources: {
+                // Mb = Md3 (normal modül 3. kademe momenti)
+                ids: ['res-Md3-output', 'm3-input', 'stored-md3'],
+                storageKeys: ['lastMd3']
+            }
+        }
     }
 ];
 
@@ -157,7 +226,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btn) {
             btn.addEventListener('click', () => calculateShaftValues(config));
         }
+
+        if (config.keyway?.btnId) {
+            const keyBtn = document.getElementById(config.keyway.btnId);
+            if (keyBtn) {
+                keyBtn.addEventListener('click', () => calculateKeywaySizing(config));
+            }
+        }
     });
+
+    renderKeywayTable();
 });
 
 function initShaftSelectors(config) {
@@ -412,4 +490,122 @@ function findSplineProfile(solidDiameter) {
     }
 
     return best;
+}
+
+function renderKeywayTable() {
+    const tbody = document.getElementById('keyway-table-body');
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+    keywayTable.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${row.minD} - ${row.maxD}</td>
+            <td>${row.b} x ${row.h}</td>
+            <td>${row.t1}</td>
+            <td>${row.t2}</td>
+            <td>${row.lMin} - ${row.lMax}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function findKeywayRow(diameter) {
+    return keywayTable.find(row => diameter >= row.minD && diameter <= row.maxD) || null;
+}
+
+function parseNumberFromText(text) {
+    if (text === null || text === undefined) return NaN;
+    const parsed = parseFloat(String(text).replace(',', '.'));
+    return isFinite(parsed) ? parsed : NaN;
+}
+
+function readNumberFromSources({ ids = [], storageKeys = [] }) {
+    for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const raw = (el.value !== undefined) ? el.value : el.textContent;
+        const val = parseNumberFromText(raw);
+        if (isFinite(val)) return val;
+    }
+
+    for (const key of storageKeys) {
+        const raw = localStorage.getItem(key);
+        const val = parseNumberFromText(raw);
+        if (isFinite(val)) return val;
+    }
+
+    return NaN;
+}
+
+function roundUpToStep(value, step) {
+    if (!isFinite(value) || step <= 0) return NaN;
+    return Math.ceil(value / step) * step;
+}
+
+function clampToRange(value, min, max) {
+    if (!isFinite(value)) return NaN;
+    return Math.min(max, Math.max(min, value));
+}
+
+function setKeywayText(id, val, suffix = '') {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = isFinite(val) ? `${val.toFixed(3)}${suffix}` : '-';
+}
+
+function setKeywayStr(id, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text ?? '-';
+}
+
+function calculateKeywaySizing(config) {
+    if (!config?.keyway) return;
+
+    const Mb = readNumberFromSources(config.keyway.mbSources);
+    if (!isFinite(Mb)) {
+        alert("Moment (Mb) değeri bulunamadı. Normal modül sayfasında hesaplayın veya ilgili moment alanını doldurun.");
+        return;
+    }
+
+    const solidText = document.getElementById(config.summarySolidId)?.textContent
+        || document.getElementById(config.resSolidId || '')?.textContent;
+    const solidD = parseNumberFromText(solidText);
+    if (!isFinite(solidD) || solidD <= 0) {
+        alert("D (dolu) değeri bulunamadı. İlgili mil burulma hesaplarını tamamlayın.");
+        return;
+    }
+
+    const usedD = roundUpToStep(solidD, KEYWAY_CONSTANTS.roundStep);
+
+    // Use the rounded-up solid diameter to find the keyway table row
+    const row = findKeywayRow(usedD);
+    if (!row) {
+        alert(`D (dolu) değeri ${usedD.toFixed(3)} mm için kama tablosunda aralık bulunamadı.`);
+        return;
+    }
+    const Ft = Mb / (usedD / 2);
+
+    const Lpg = Ft / (KEYWAY_CONSTANTS.pG * row.t2);
+    const Ltau32 = Ft / (KEYWAY_CONSTANTS.tauOk * row.b);
+    const Ltau380 = Ft / (KEYWAY_CONSTANTS.tauOf * row.b);
+
+    const maxL = Math.max(Lpg, Ltau32, Ltau380);
+    const roundedL = roundUpToStep(maxL, KEYWAY_CONSTANTS.roundStep);
+    const selectedL = clampToRange(roundedL, row.lMin, row.lMax);
+
+    const out = config.keyway.outputs;
+    setKeywayStr(out.range, `${row.minD} - ${row.maxD} mm`);
+    setKeywayStr(out.bh, `${row.b} × ${row.h}`);
+    setKeywayText(out.t1, row.t1, ' mm');
+    setKeywayText(out.t2, row.t2, ' mm');
+    setKeywayStr(out.lRange, `${row.lMin} - ${row.lMax} mm`);
+
+    setKeywayText(out.dUsed, usedD, ' mm');
+    setKeywayText(out.ft, Ft, ' N');
+    setKeywayText(out.lPg, Lpg, ' mm');
+    setKeywayText(out.lTau32, Ltau32, ' mm');
+    setKeywayText(out.lTau380, Ltau380, ' mm');
+    setKeywayText(out.lFinal, selectedL, ' mm');
 }

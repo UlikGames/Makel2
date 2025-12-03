@@ -309,37 +309,157 @@
                         <span class="summary-value" id="spline-centering">-</span>
                     </div>
                 </div>
-                <div style="overflow-x: auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>d1</th>
-                                <th>d2</th>
-                                <th>b</th>
-                                <th>D3</th>
-                                <th>e2</th>
-                                <th>f</th>
-                                <th>g</th>
-                                <th>K</th>
-                                <th>r</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id="spline-d1">-</td>
-                                <td id="spline-d2">-</td>
-                                <td id="spline-b">-</td>
-                                <td id="spline-D3">-</td>
-                                <td id="spline-e2">-</td>
-                                <td id="spline-f">-</td>
-                                <td id="spline-g">-</td>
-                                <td id="spline-K">-</td>
-                                <td id="spline-r">-</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </div>
+        </div>
+
+        <div class="section-label" style="margin-top: 2rem;">Kama Tablosu ve Ft / L Hesabı (2. Mil)</div>
+        <div class="card" style="margin-top: 0.75rem;">
+            <h1 style="margin-bottom: 0.75rem;">Kama Seçimi ve Ft Tabanlı Uzunluk (2. Dişli)</h1>
+            <p class="subtitle" style="margin-bottom: 1rem;">
+                Ft = M<sub>B</sub> / (D/2) &nbsp;|&nbsp; p<sub>G</sub> = Ft / (t<sub>2</sub> · L) &nbsp;|&nbsp;
+                τ<sub>k</sub> = Ft / (b · L) <br>
+                p<sub>G</sub> sabit 1500, τ<sub>k</sub> (taok) sabit 35, τ<sub>of</sub> sabit 380.
+            </p>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">Şaft Aralığı</span>
+                    <span class="summary-value" id="keyway-range">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">b × h</span>
+                    <span class="summary-value" id="keyway-bh">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">t<sub>1</sub></span>
+                    <span class="summary-value" id="keyway-t1">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">t<sub>2</sub></span>
+                    <span class="summary-value" id="keyway-t2">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">L (min-max)</span>
+                    <span class="summary-value" id="keyway-l-range">-</span>
                 </div>
             </div>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">D (dolu, 5'e yukarı)</span>
+                    <span class="summary-value" id="keyway-d-used">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>t</sub></span>
+                    <span class="summary-value" id="keyway-ft">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">L<sub>pG</sub></span>
+                    <span class="summary-value" id="keyway-l-pg">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">L<sub>τ32</sub></span>
+                    <span class="summary-value" id="keyway-l-tau32">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">L<sub>τ380</sub></span>
+                    <span class="summary-value" id="keyway-l-tau380">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">Seçilen L</span>
+                    <span class="summary-value" id="keyway-l-final">-</span>
+                </div>
+            </div>
+
+            <button id="calc-keyway-btn" class="btn btn-primary">Kama Hesapla (2. Mil)</button>
+            <p class="subtitle" style="color: var(--text-secondary); margin-top: 0.75rem;">
+                2. mil çapı (shaft2-diameter), D (summary-solid2) ve Md<sub>2</sub> (res-Md3) kullanılır. Hesaplanan üç
+                L değerinden en büyük seçilir ve 5'lik adıma yukarı yuvarlanır; sonuç tablo sınırları içinde tutulur.
+            </p>
+
+            <div class="sr-only" style="overflow-x: auto; margin-top: 1rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mil Çapı (d) min - max</th>
+                            <th>b × h</th>
+                            <th>t<sub>1</sub></th>
+                            <th>t<sub>2</sub></th>
+                            <th>Kama Boyu (l) min - max</th>
+                        </tr>
+                    </thead>
+                    <tbody id="keyway-table-body">
+                        <!-- JS ile doldurulacak -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-label" style="margin-top: 2rem;">Kama Tablosu ve Ft / L Hesabı (3. Mil)</div>
+        <div class="card" style="margin-top: 0.75rem;">
+            <h1 style="margin-bottom: 0.75rem;">Kama Seçimi ve Ft Tabanlı Uzunluk (4. Dişli)</h1>
+            <p class="subtitle" style="margin-bottom: 1rem;">
+                Ft = M<sub>B</sub> / (D/2) &nbsp;|&nbsp; p<sub>G</sub> = Ft / (t<sub>2</sub> · L) &nbsp;|&nbsp;
+                τ<sub>k</sub> = Ft / (b · L) <br>
+                p<sub>G</sub> sabit 1500, τ<sub>k</sub> (taok) sabit 35, τ<sub>of</sub> sabit 380.
+            </p>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">Şaft Aralığı</span>
+                    <span class="summary-value" id="keyway-range-3">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">b × h</span>
+                    <span class="summary-value" id="keyway-bh-3">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">t<sub>1</sub></span>
+                    <span class="summary-value" id="keyway-t1-3">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">t<sub>2</sub></span>
+                    <span class="summary-value" id="keyway-t2-3">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">L (min-max)</span>
+                    <span class="summary-value" id="keyway-l-range-3">-</span>
+                </div>
+            </div>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">D (dolu, 5'e yukarı)</span>
+                    <span class="summary-value" id="keyway-d-used-3">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>t</sub></span>
+                    <span class="summary-value" id="keyway-ft-3">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">L<sub>pG</sub></span>
+                    <span class="summary-value" id="keyway-l-pg-3">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">L<sub>τ32</sub></span>
+                    <span class="summary-value" id="keyway-l-tau32-3">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">L<sub>τ380</sub></span>
+                    <span class="summary-value" id="keyway-l-tau380-3">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">Seçilen L</span>
+                    <span class="summary-value" id="keyway-l-final-3">-</span>
+                </div>
+            </div>
+
+            <button id="calc-keyway-btn-3" class="btn btn-primary">Kama Hesapla (3. Mil)</button>
+            <p class="subtitle" style="color: var(--text-secondary); margin-top: 0.75rem;">
+                3. mil çapı (shaft3-diameter), D (summary-solid3) ve Md<sub>3</sub> (res-Md3-output) kullanılır.
+                Hesaplanan üç L değerinden en büyük seçilir ve 5'lik adıma yukarı yuvarlanır; sonuç tablo sınırları
+                içinde tutulur. Tablo verisi yukarıdaki kartta gizlenmiş durumda.
+            </p>
         </div>
 
         <a class="back-top-chip" href="#top" aria-label="Başa Dön">↑ Yukarı</a>
