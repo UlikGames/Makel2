@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normal Modül Hesabı - Makina Elemanları</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body id="top">
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="../index.html" class="brand">Makina Elemanları</a>
+            <span class="nav-pill">Normal Modül</span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html">Ana Sayfa</a>
+            <a href="normal_module.html" class="active">Normal Modül</a>
+            <a href="shaft_calculations.html">Mil Hesabı</a>
+            <a href="force_calculations.html">Kuvvet Hesabı</a>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">🌙</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h1>Normal Modül (m<sub>n</sub>) Hesabı</h1>
+            <p class="subtitle" style="margin-bottom: 2rem;">Diş Dibi Mukavemetine Göre</p>
+
+            <div class="section-label">1. Kademe Girdi</div>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="Ka">İşletme Faktörü (K<sub>A</sub>)</label>
+                    <input type="number" id="Ka" step="0.01" placeholder="örn: 1.25">
+                </div>
+                <div class="input-group">
+                    <label for="Kv">Dinamik Faktör (K<sub>V</sub>)</label>
+                    <input type="number" id="Kv" step="0.01" placeholder="örn: 1.1">
+                </div>
+                <div class="input-group">
+                    <label for="P">Güç (P) [kW]</label>
+                    <input type="number" id="P" step="0.1" placeholder="örn: 10">
+                </div>
+                <div class="input-group">
+                    <label for="N">Devir Sayısı (N) [d/d]</label>
+                    <input type="number" id="N" step="1" placeholder="örn: 1450">
+                </div>
+                <div class="input-group">
+                    <label for="z1">Pinyon Diş Sayısı (z<sub>1</sub>)</label>
+                    <input type="number" id="z1" step="1" placeholder="örn: 20">
+                </div>
+                <div class="input-group">
+                    <label for="beta0">Helis Açısı (β<sub>0</sub>) [derece]</label>
+                    <input type="number" id="beta0" step="0.1" placeholder="örn: 15">
+                </div>
+                <div class="input-group">
+                    <label for="psi">Genişlik Faktörü (ψ)</label>
+                    <input type="number" id="psi" step="0.1" placeholder="örn: 10">
+                </div>
+                <div class="input-group">
+                    <label for="z2">Çark Diş Sayısı (z<sub>2</sub>)</label>
+                    <input type="number" id="z2" step="1" placeholder="örn: 60">
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2>2. Kademe Hesapları</h2>
+            <p class="subtitle" style="margin-bottom: 1.5rem;">İkinci Dişli Grubu Verileri</p>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="eta">Verim 1 (η<sub>1</sub>)</label>
+                    <input type="number" id="eta" step="0.01" placeholder="örn: 0.98">
+                </div>
+                <div class="input-group">
+                    <label for="eta2">Verim 2 (η<sub>2</sub>)</label>
+                    <input type="number" id="eta2" step="0.01" placeholder="örn: 0.97">
+                </div>
+                <div class="input-group">
+                    <label for="beta0_2">Helis Açısı (β<sub>0</sub>) [2. Kademe]</label>
+                    <input type="number" id="beta0_2" step="0.1" placeholder="örn: 15">
+                </div>
+                <div class="input-group">
+                    <label for="z3">Pinyon Diş Sayısı (z<sub>3</sub>)</label>
+                    <input type="number" id="z3" step="1" placeholder="örn: 18">
+                </div>
+                <div class="input-group">
+                    <label for="itoplam">Toplam Çevrim Oranı (i<sub>toplam</sub>)</label>
+                    <input type="number" id="itoplam" step="0.01" placeholder="örn: 20">
+                </div>
+            </div>
+
+            <button id="calculateBtn" class="btn btn-primary" style="margin-top: 2rem;">Hesapla</button>
+
+            <div id="results" class="results-section">
+                <div class="section-label">1. Kademe Sonuç Özeti</div>
+                <div class="summary-strip">
+                    <div class="summary-badge">
+                        <span class="summary-label">Md<sub>1</sub></span>
+                        <span class="summary-value" id="summary-md1-main">-</span>
+                    </div>
+                    <div class="summary-badge">
+                        <span class="summary-label">m<sub>n1</sub></span>
+                        <span class="summary-value" id="summary-mn1-main">-</span>
+                    </div>
+                    <div class="summary-badge">
+                        <span class="summary-label">m<sub>n2</sub></span>
+                        <span class="summary-value" id="summary-mn2-main">-</span>
+                    </div>
+                </div>
+
+                <h2>Sonuçlar</h2>
+
+                <div class="intermediate-results">
+                    <div class="mini-result">
+                        <span class="label">Döndürme Momenti (M<sub>d1</sub>)</span>
+                        <span class="value" id="res-Md1">-</span>
+                    </div>
+                    <div class="mini-result">
+                        <span class="label">Çevrim Oranı (i<sub>1</sub>)</span>
+                        <span class="value" id="res-i1">-</span>
+                    </div>
+                    <div class="mini-result">
+                        <span class="label">Eşdeğer Diş Sayısı (Z<sub>eş</sub>)</span>
+                        <span class="value" id="res-Zes">-</span>
+                    </div>
+                    <div class="mini-result">
+                        <span class="label">Form Faktörü (Υ)</span>
+                        <span class="value" id="res-Y">-</span>
+                    </div>
+                    <div class="mini-result">
+                        <span class="label">Profil Kavrama Oranı (ε<sub>α</sub>)</span>
+                        <span class="value" id="res-Ea">-</span>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <span class="result-label">Diş Dibi Mukavemetine Göre Modül (m<sub>n1</sub>)</span>
+                    <div class="result-value" id="res-mn">-</div>
+                    <span class="result-label">mm</span>
+                </div>
+
+                <div class="result-card"
+                    style="margin-top: 1rem; border-color: var(--purple); background: var(--purple-light);">
+                    <span class="result-label">Yüzey Basıncına Göre Modül (m<sub>n2</sub>)</span>
+                    <div class="result-value" id="res-mn2" style="color: var(--purple);">-</div>
+                    <span class="result-label">mm</span>
+                </div>
+
+                <div class="result-card"
+                    style="margin-top: 1rem; border-color: var(--success); background: var(--success-light);">
+                    <span class="result-label">Standart Modül Seçimi (m<sub>n</sub>) [1. Kademe]</span>
+                    <div style="margin-top: 0.75rem;">
+                        <select id="standard-module-select"
+                            style="width: 100%; max-width: 300px; margin: 0 auto; text-align: center; font-size: 1.1rem; font-weight: 600;">
+                            <option value="">Hesaplama Bekleniyor...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Stage 2 Results -->
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+                    <h3>2. Kademe Sonuçları</h3>
+
+                    <div class="intermediate-results">
+                        <div class="mini-result">
+                            <span class="label">2. Kademe Momenti (M<sub>d2</sub>)</span>
+                            <span class="value" id="res-Md3">-</span>
+                        </div>
+                        <div class="mini-result">
+                            <span class="label">Çevrim Oranı (i<sub>2</sub>)</span>
+                            <span class="value" id="res-i2">-</span>
+                        </div>
+                        <div class="mini-result">
+                            <span class="label">Çark Diş Sayısı (z<sub>4</sub>)</span>
+                            <span class="value" id="res-z4">-</span>
+                        </div>
+                        <div class="mini-result">
+                            <span class="label">Eşdeğer Diş Sayısı (Z<sub>eş3</sub>)</span>
+                            <span class="value" id="res-Zes3">-</span>
+                        </div>
+                        <div class="mini-result">
+                            <span class="label">Form Faktörü (Υ<sub>3</sub>)</span>
+                            <span class="value" id="res-Y3">-</span>
+                        </div>
+                        <div class="mini-result">
+                            <span class="label">Profil Kavrama Oranı (ε<sub>α3</sub>)</span>
+                            <span class="value" id="res-Ea3">-</span>
+                        </div>
+                        <div class="mini-result" style="background: var(--success-light); border-color: var(--success);">
+                            <span class="label">3. Mil Momenti (M<sub>d3</sub>)</span>
+                            <span class="value" id="res-Md3-output">-</span>
+                        </div>
+                    </div>
+
+                    <div class="result-card" style="margin-top: 1rem;">
+                        <span class="result-label">Diş Dibi Mukavemetine Göre Modül (m<sub>n3</sub>)</span>
+                        <div class="result-value" id="res-mn3">-</div>
+                        <span class="result-label">mm</span>
+                    </div>
+
+                    <div class="result-card"
+                        style="margin-top: 1rem; border-color: var(--purple); background: var(--purple-light);">
+                        <span class="result-label">Yüzey Basıncına Göre Modül (m<sub>n4</sub>)</span>
+                        <div class="result-value" id="res-mn4" style="color: var(--purple);">-</div>
+                        <span class="result-label">mm</span>
+                    </div>
+
+                    <div class="result-card"
+                        style="margin-top: 1rem; border-color: var(--success); background: var(--success-light);">
+                        <span class="result-label">Standart Modül Seçimi (m<sub>n</sub>) [2. Kademe]</span>
+                        <div style="margin-top: 0.75rem;">
+                            <select id="standard-module-select-2"
+                                style="width: 100%; max-width: 300px; margin: 0 auto; text-align: center; font-size: 1.1rem; font-weight: 600;">
+                                <option value="">Hesaplama Bekleniyor...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gear Dimensions Table -->
+                <div id="gear-dimensions-section"
+                    style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--border-medium); display: none;">
+                    <h2 style="margin-bottom: 1.5rem;">Dişli Grubunun Ölçülerinin Belirlenmesi</h2>
+
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Parametre</th>
+                                    <th style="text-align: center;">1.Dişli (Pinyon)</th>
+                                    <th style="text-align: center;">2.Dişli (Çark)</th>
+                                    <th style="text-align: center; background: var(--purple-light);">3.Dişli (Pinyon)
+                                    </th>
+                                    <th style="text-align: center; background: var(--purple-light);">4.Dişli (Çark)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Taksimat Çapı (D<sub>0</sub>) mm</td>
+                                    <td style="text-align: center;" id="dim-d0-1">-</td>
+                                    <td style="text-align: center;" id="dim-d0-2">-</td>
+                                    <td style="text-align: center; background: var(--purple-light);" id="dim-d0-3">-
+                                    </td>
+                                    <td style="text-align: center; background: var(--purple-light);" id="dim-d0-4">-
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Diş Başı (D<sub>a</sub>) mm</td>
+                                    <td style="text-align: center;" id="dim-da-1">-</td>
+                                    <td style="text-align: center;" id="dim-da-2">-</td>
+                                    <td style="text-align: center; background: var(--purple-light);" id="dim-da-3">-
+                                    </td>
+                                    <td style="text-align: center; background: var(--purple-light);" id="dim-da-4">-
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Diş Dibi (D<sub>f</sub>) mm</td>
+                                    <td style="text-align: center;" id="dim-df-1">-</td>
+                                    <td style="text-align: center;" id="dim-df-2">-</td>
+                                    <td style="text-align: center; background: var(--purple-light);" id="dim-df-3">-
+                                    </td>
+                                    <td style="text-align: center; background: var(--purple-light);" id="dim-df-4">-
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Temel Daire Çapı (D<sub>b</sub>) mm</td>
+                                    <td style="text-align: center;" id="dim-db-1">-</td>
+                                    <td style="text-align: center;" id="dim-db-2">-</td>
+                                    <td style="text-align: center; background: var(--purple-light);" id="dim-db-3">-
+                                    </td>
+                                    <td style="text-align: center; background: var(--purple-light);" id="dim-db-4">-
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Diş Genişliği (b) mm</td>
+                                    <td style="text-align: center;" id="dim-b-1">-</td>
+                                    <td style="text-align: center;" id="dim-b-2">-</td>
+                                    <td style="text-align: center; background: var(--purple-light);" id="dim-b-3">-</td>
+                                    <td style="text-align: center; background: var(--purple-light);" id="dim-b-4">-</td>
+                                </tr>
+                                <tr style="background: var(--accent-light);">
+                                    <td style="font-weight: 600;">Diş Sayısı (z) adet</td>
+                                    <td style="text-align: center; font-weight: 600;" id="dim-z-1">-</td>
+                                    <td style="text-align: center; font-weight: 600;" id="dim-z-2">-</td>
+                                    <td style="text-align: center; font-weight: 600; background: var(--purple-light);"
+                                        id="dim-z-3">-</td>
+                                    <td style="text-align: center; font-weight: 600; background: var(--purple-light);"
+                                        id="dim-z-4">-</td>
+                                </tr>
+                                <tr style="background: var(--accent-light);">
+                                    <td style="font-weight: 600;">Modül (m) mm</td>
+                                    <td style="text-align: center; font-weight: 600;" id="dim-m-1">-</td>
+                                    <td style="text-align: center; font-weight: 600;" id="dim-m-2">-</td>
+                                    <td style="text-align: center; font-weight: 600; background: var(--purple-light);"
+                                        id="dim-m-3">-</td>
+                                    <td style="text-align: center; font-weight: 600; background: var(--purple-light);"
+                                        id="dim-m-4">-</td>
+                                </tr>
+                                <tr style="background: var(--accent-light);">
+                                    <td style="font-weight: 600;">Helis Açısı (β<sub>0</sub>)°</td>
+                                    <td style="text-align: center; font-weight: 600;" id="dim-beta-1">-</td>
+                                    <td style="text-align: center; font-weight: 600;" id="dim-beta-2">-</td>
+                                    <td style="text-align: center; font-weight: 600; background: var(--purple-light);"
+                                        id="dim-beta-3">-</td>
+                                    <td style="text-align: center; font-weight: 600; background: var(--purple-light);"
+                                        id="dim-beta-4">-</td>
+                                </tr>
+                                <tr style="background: var(--success-light);">
+                                    <td style="font-weight: 600;">Merkez Mesafesi (a<sub>1</sub>) mm</td>
+                                    <td colspan="2" style="text-align: center; font-weight: 600; font-size: 1.1rem;"
+                                        id="dim-a1">-</td>
+                                    <td colspan="2" style="background: var(--success-light);"></td>
+                                </tr>
+                                <tr style="background: var(--success-light);">
+                                    <td style="font-weight: 600;">Merkez Mesafesi (a<sub>2</sub>) mm</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="2"
+                                        style="text-align: center; font-weight: 600; font-size: 1.1rem; background: var(--success-light);"
+                                        id="dim-a2">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a class="back-top-chip" href="#top" aria-label="Başa Dön">↑ Yukarı</a>
+
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/normal_module.js"></script>
+</body>
+
+</html>

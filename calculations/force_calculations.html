@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dişli Kuvvetleri - Makina Elemanları</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body id="top">
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="../index.html" class="brand">Makina Elemanları</a>
+            <span class="nav-pill">Kuvvet Hesabı</span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html">Ana Sayfa</a>
+            <a href="normal_module.html">Normal Modül</a>
+            <a href="shaft_calculations.html">Mil Hesabı</a>
+            <a href="force_calculations.html" class="active">Kuvvet Hesabı</a>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">🌙</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h1>Helis Dişli Kuvvetleri</h1>
+            <p class="subtitle" style="margin-bottom: 1.5rem;">Ft, Fr, Fe hesapları (α<sub>0</sub> = 20° sabit)</p>
+            <p class="subtitle" style="color: var(--text-primary); font-weight: 500;">
+                Ft = 2 * M<sub>d</sub> / D<sub>0</sub>,&nbsp;
+                Fr = (Ft / cos β<sub>0</sub>) * tan α<sub>0</sub>,&nbsp;
+                Fe = Ft * tan β<sub>0</sub>
+            </p>
+        </div>
+
+        <div class="section-label">1. Kademe Kuvvetleri (Md<sub>1</sub>, β<sub>0</sub>)</div>
+        <div class="card" style="margin-top: 0.75rem;">
+            <h2 style="margin-bottom: 0.5rem;">Ft<sub>1</sub>, Fr<sub>1</sub>, Fe<sub>1</sub></h2>
+            <p class="subtitle" style="margin-bottom: 1.5rem;">M<sub>d1</sub> (res-Md1) ve D<sub>0,1</sub> (dim-d0-1) ile</p>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">Ft<sub>1</sub></span>
+                    <span class="summary-value" id="res-ft1">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">Fr<sub>1</sub></span>
+                    <span class="summary-value" id="res-fr1">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">Fe<sub>1</sub></span>
+                    <span class="summary-value" id="res-fe1">-</span>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="md1-input-force">Md<sub>1</sub> [Nmm]</label>
+                    <input type="number" id="md1-input-force" step="0.001" placeholder="Normal modül Md1 (res-Md1)">
+                    <small style="color: var(--text-secondary);">Son Md<sub>1</sub>: <span id="hint-md1">-</span></small>
+                </div>
+                <div class="input-group">
+                    <label for="d0-1-input">D<sub>0,1</sub> (Taksimat Çapı) [mm]</label>
+                    <input type="number" id="d0-1-input" step="0.001" placeholder="dim-d0-1">
+                    <small style="color: var(--text-secondary);">Son D<sub>0,1</sub>: <span id="hint-d0-1">-</span></small>
+                </div>
+                <div class="input-group">
+                    <label for="beta0-input">β<sub>0</sub> [°]</label>
+                    <input type="number" id="beta0-input" step="0.01" placeholder="İlk helis açısı (beta0)">
+                    <small style="color: var(--text-secondary);">Son β<sub>0</sub>: <span id="hint-beta0">-</span></small>
+                </div>
+                <div class="input-group">
+                    <label>α<sub>0</sub> [°]</label>
+                    <div style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--bg-secondary); border: 1px solid var(--border-subtle);">
+                        <span id="hint-alpha">20° (sabit)</span>
+                    </div>
+                </div>
+            </div>
+
+            <button id="calc-force-1" class="btn btn-primary" style="margin-top: 1rem;">Kuvvetleri Hesapla (1. Kademe)</button>
+        </div>
+
+        <div class="section-label" style="margin-top: 2rem;">2. Kademe Kuvvetleri (Md<sub>2</sub>, β<sub>0,2</sub>)</div>
+        <div class="card" style="margin-top: 0.75rem;">
+            <h2 style="margin-bottom: 0.5rem;">Ft<sub>2</sub>, Fr<sub>2</sub>, Fe<sub>2</sub></h2>
+            <p class="subtitle" style="margin-bottom: 1.5rem;">M<sub>d2</sub> (res-Md3) ve D<sub>0,3</sub> (dim-d0-3) ile</p>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">Ft<sub>2</sub></span>
+                    <span class="summary-value" id="res-ft2">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">Fr<sub>2</sub></span>
+                    <span class="summary-value" id="res-fr2">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">Fe<sub>2</sub></span>
+                    <span class="summary-value" id="res-fe2">-</span>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="md2-input-force">Md<sub>2</sub> [Nmm]</label>
+                    <input type="number" id="md2-input-force" step="0.001" placeholder="Normal modül Md2 (res-Md3)">
+                    <small style="color: var(--text-secondary);">Son Md<sub>2</sub>: <span id="hint-md2">-</span></small>
+                </div>
+                <div class="input-group">
+                    <label for="d0-3-input">D<sub>0,3</sub> (Taksimat Çapı) [mm]</label>
+                    <input type="number" id="d0-3-input" step="0.001" placeholder="dim-d0-3">
+                    <small style="color: var(--text-secondary);">Son D<sub>0,3</sub>: <span id="hint-d0-3">-</span></small>
+                </div>
+                <div class="input-group">
+                    <label for="beta0-2-input">β<sub>0,2</sub> [°]</label>
+                    <input type="number" id="beta0-2-input" step="0.01" placeholder="İkinci helis açısı (beta0_2)">
+                    <small style="color: var(--text-secondary);">Son β<sub>0,2</sub>: <span id="hint-beta0-2">-</span></small>
+                </div>
+                <div class="input-group">
+                    <label>α<sub>0</sub> [°]</label>
+                    <div style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--bg-secondary); border: 1px solid var(--border-subtle);">
+                        20° (sabit)
+                    </div>
+                </div>
+            </div>
+
+            <button id="calc-force-2" class="btn btn-primary" style="margin-top: 1rem;">Kuvvetleri Hesapla (2. Kademe)</button>
+        </div>
+    </div>
+
+    <a class="back-top-chip" href="#top" aria-label="Başa Dön">↑ Yukarı</a>
+
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/force_calculations.js"></script>
+</body>
+
+</html>

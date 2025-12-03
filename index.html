@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makina Elemanları Hesaplayıcısı</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="index.html" class="brand">Makina Elemanları</a>
+            <span class="nav-pill">Hesaplayıcı</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="active">Ana Sayfa</a>
+            <a href="calculations/normal_module.html">Normal Modül</a>
+            <a href="calculations/shaft_calculations.html">Mil Hesabı</a>
+            <a href="calculations/force_calculations.html">Kuvvet Hesabı</a>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">🌙</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Makina Elemanları Hesaplayıcısı</h1>
+            <p class="subtitle">Mühendislik hesaplamaları artık çok kolay</p>
+        </header>
+
+        <div class="form-grid">
+            <a href="calculations/normal_module.html" style="text-decoration: none;">
+                <div class="card" style="height: 100%; margin-bottom: 0; transition: all 0.2s;">
+                    <h2 style="margin-bottom: 0.75rem;">Normal Modül (m<sub>n</sub>)</h2>
+                    <p class="subtitle" style="margin-bottom: 1.5rem;">
+                        Diş dibi mukavemetine göre normal modül hesabı (Form faktörü interpolasyonu dahil).
+                    </p>
+                    <span class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                        Hesaplayıcıyı Aç
+                    </span>
+                </div>
+            </a>
+
+            <a href="calculations/shaft_calculations.html" style="text-decoration: none;">
+                <div class="card" style="height: 100%; margin-bottom: 0; transition: all 0.2s;">
+                    <h2 style="margin-bottom: 0.75rem;">Mil Hesabı</h2>
+                    <p class="subtitle" style="margin-bottom: 1.5rem;">
+                        Standart mil çaplarına göre mil ucu uzunluğu ve tolerans seçimi.
+                    </p>
+                    <span class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                        Hesaplayıcıyı Aç
+                    </span>
+                </div>
+            </a>
+
+            <a href="calculations/force_calculations.html" style="text-decoration: none;">
+                <div class="card" style="height: 100%; margin-bottom: 0; transition: all 0.2s;">
+                    <h2 style="margin-bottom: 0.75rem;">Kuvvet Hesabı</h2>
+                    <p class="subtitle" style="margin-bottom: 1.5rem;">
+                        Md, β<sub>0</sub> ve taksimat çapına göre Ft, Fr, Fe hesapları (2 kademe).
+                    </p>
+                    <span class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                        Hesaplayıcıyı Aç
+                    </span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <style>
+        /* Card hover effect for homepage */
+        .form-grid a .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.12), 0 8px 16px -4px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+
+    <script src="js/theme-toggle.js"></script>
+</body>
+
+</html>

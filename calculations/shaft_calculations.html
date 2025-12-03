@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mil Hesabı - Makina Elemanları</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body id="top">
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="../index.html" class="brand">Makina Elemanları</a>
+            <span class="nav-pill">Mil Hesabı</span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html">Ana Sayfa</a>
+            <a href="normal_module.html">Normal Modül</a>
+            <a href="shaft_calculations.html" class="active">Mil Hesabı</a>
+            <a href="force_calculations.html">Kuvvet Hesabı</a>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">🌙</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="section-label">1. Mil Geometri</div>
+        <div class="card">
+            <h1>1. Mil Hesabı</h1>
+            <p class="subtitle" style="margin-bottom: 2rem;">Standart Mil Çapları ve Uç Uzunlukları</p>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="shaft-diameter">Mil Çapı (d) [mm]</label>
+                    <select id="shaft-diameter">
+                        <option value="">Seçiniz...</option>
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="shaft-length">Mil Ucu Uzunluğu (l) [mm]</label>
+                    <select id="shaft-length" disabled
+                        style="background: var(--purple-light); color: var(--purple); font-weight: 500;">
+                        <option value="">Önce Çap Seçiniz</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Çap Toleransı</label>
+                    <div id="tolerance-display"
+                        style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--success-light); color: var(--success); border: 1px solid var(--success); font-weight: 600;">
+                        -
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-label">1. Mil Burulma</div>
+        <div class="card" style="margin-top: 1.5rem;">
+            <h1 style="margin-bottom: 0.75rem;">1. Mil Burulma Hesapları</h1>
+            <p class="subtitle" style="margin-bottom: 2rem;">Md1, içi boş/dolu mil çapı ve kayma gerilmesi kontrolü</p>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">Md<sub>1</sub></span>
+                    <span class="summary-value" id="summary-md1-shaft">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">D<sub>dış</sub></span>
+                    <span class="summary-value" id="summary-ddis1">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">D (dolu)</span>
+                    <span class="summary-value" id="summary-solid1">-</span>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="k-factor">k Katsayısı</label>
+                    <input type="number" id="k-factor" step="0.001" placeholder="örn: 1.100">
+                </div>
+                <div class="input-group">
+                    <label for="m1-input">M<sub>1</sub> (Normal Modül Md<sub>1</sub>) [Nmm]</label>
+                    <input type="number" id="m1-input" step="0.001" placeholder="Normal modül sayfasından Md1 değeri">
+                    <small style="color: var(--text-secondary); font-size: var(--font-size-xs);">Son kaydedilen
+                        Md<sub>1</sub>: <span id="stored-md1">-</span></small>
+                </div>
+                <div class="input-group">
+                    <label>Seçilen Mil Çapı (d<sub>iç</sub>)</label>
+                    <div id="selected-diameter-display"
+                        style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--bg-secondary); border: 1px solid var(--border-subtle);">
+                        -
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>İzin Verilen Kayma Gerilmesi (τ<sub>em</sub>)</label>
+                    <div id="tau-constant-display"
+                        style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--success-light); border: 1px solid var(--success); font-weight: 600; color: var(--success);">
+                        36 MPa (sabit)
+                    </div>
+                </div>
+            </div>
+
+            <button id="calculate-shaft-btn" class="btn btn-primary" style="margin-top: 1rem;">Hesapla</button>
+
+            <div id="shaft-results" class="results-section sr-only">
+                Md1: <span id="res-md1-shaft">-</span>,
+                Ddis: <span id="res-ddis">-</span>,
+                D: <span id="res-solid-d">-</span>
+            </div>
+        </div>
+
+        <!-- 2. Mil -->
+        <div class="section-label" style="margin-top: 2rem;">2. Mil Geometri</div>
+        <div class="card">
+            <h1>2. Mil Hesabı</h1>
+            <p class="subtitle" style="margin-bottom: 2rem;">Standart Mil Çapları ve Uç Uzunlukları</p>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="shaft2-diameter">Mil Çapı (d) [mm]</label>
+                    <select id="shaft2-diameter">
+                        <option value="">Seçiniz...</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="shaft2-length">Mil Ucu Uzunluğu (l) [mm]</label>
+                    <select id="shaft2-length" disabled
+                        style="background: var(--purple-light); color: var(--purple); font-weight: 500;">
+                        <option value="">Önce Çap Seçiniz</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Çap Toleransı</label>
+                    <div id="tolerance2-display"
+                        style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--success-light); color: var(--success); border: 1px solid var(--success); font-weight: 600;">
+                        -
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-label">2. Mil Burulma</div>
+        <div class="card" style="margin-top: 1.5rem;">
+            <h1 style="margin-bottom: 0.75rem;">2. Mil Burulma Hesapları</h1>
+            <p class="subtitle" style="margin-bottom: 2rem;">Md2, içi boş/dolu mil çapı ve kayma gerilmesi kontrolü</p>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">Md<sub>2</sub></span>
+                    <span class="summary-value" id="summary-md2-shaft">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">D<sub>dış</sub></span>
+                    <span class="summary-value" id="summary-ddis2">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">D (dolu)</span>
+                    <span class="summary-value" id="summary-solid2">-</span>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="k-factor-2">k Katsayısı</label>
+                    <input type="number" id="k-factor-2" step="0.001" placeholder="örn: 1.100">
+                </div>
+                <div class="input-group">
+                    <label for="m2-input">M<sub>2</sub> (Normal Modül Md<sub>2</sub>) [Nmm]</label>
+                    <input type="number" id="m2-input" step="0.001" placeholder="Normal modül sayfasından Md2 değeri">
+                    <small style="color: var(--text-secondary); font-size: var(--font-size-xs);">Son kaydedilen
+                        Md<sub>2</sub>: <span id="stored-md2">-</span></small>
+                </div>
+                <div class="input-group">
+                    <label>Seçilen Mil Çapı (d<sub>iç</sub>)</label>
+                    <div id="selected-diameter-display-2"
+                        style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--bg-secondary); border: 1px solid var(--border-subtle);">
+                        -
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>İzin Verilen Kayma Gerilmesi (τ<sub>em</sub>)</label>
+                    <div id="tau-constant-display-2"
+                        style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--success-light); border: 1px solid var(--success); font-weight: 600; color: var(--success);">
+                        36 MPa (sabit)
+                    </div>
+                </div>
+            </div>
+
+            <button id="calculate-shaft-btn-2" class="btn btn-primary" style="margin-top: 1rem;">Hesapla</button>
+
+            <div id="shaft-results-2" class="results-section sr-only">
+                Md2: <span id="res-md2-shaft">-</span>,
+                Ddis: <span id="res-ddis-2">-</span>,
+                D: <span id="res-solid-d-2">-</span>
+            </div>
+        </div>
+
+        <!-- 3. Mil -->
+        <div class="section-label" style="margin-top: 2rem;">3. Mil Geometri</div>
+        <div class="card">
+            <h1>3. Mil Hesabı</h1>
+            <p class="subtitle" style="margin-bottom: 2rem;">Standart Mil Çapları ve Uç Uzunlukları</p>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="shaft3-diameter">Mil Çapı (d) [mm]</label>
+                    <select id="shaft3-diameter">
+                        <option value="">Seçiniz...</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="shaft3-length">Mil Ucu Uzunluğu (l) [mm]</label>
+                    <select id="shaft3-length" disabled
+                        style="background: var(--purple-light); color: var(--purple); font-weight: 500;">
+                        <option value="">Önce Çap Seçiniz</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Çap Toleransı</label>
+                    <div id="tolerance3-display"
+                        style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--success-light); color: var(--success); border: 1px solid var(--success); font-weight: 600;">
+                        -
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-label">3. Mil Burulma</div>
+        <div class="card" style="margin-top: 1.5rem;">
+            <h1 style="margin-bottom: 0.75rem;">3. Mil Burulma Hesapları</h1>
+            <p class="subtitle" style="margin-bottom: 2rem;">Md3, içi boş/dolu mil çapı ve kayma gerilmesi kontrolü</p>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">Md<sub>3</sub></span>
+                    <span class="summary-value" id="summary-md3-shaft">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">D<sub>dış</sub></span>
+                    <span class="summary-value" id="summary-ddis3">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">D (dolu)</span>
+                    <span class="summary-value" id="summary-solid3">-</span>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="k-factor-3">k Katsayısı</label>
+                    <input type="number" id="k-factor-3" step="0.001" placeholder="örn: 1.100">
+                </div>
+                <div class="input-group">
+                    <label for="m3-input">M<sub>3</sub> (Normal Modül Md<sub>3</sub>) [Nmm]</label>
+                    <input type="number" id="m3-input" step="0.001" placeholder="Normal modül sayfasından Md3 değeri">
+                    <small style="color: var(--text-secondary); font-size: var(--font-size-xs);">Son kaydedilen
+                        Md<sub>3</sub>: <span id="stored-md3">-</span></small>
+                </div>
+                <div class="input-group">
+                    <label>Seçilen Mil Çapı (d<sub>iç</sub>)</label>
+                    <div id="selected-diameter-display-3"
+                        style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--bg-secondary); border: 1px solid var(--border-subtle);">
+                        -
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>İzin Verilen Kayma Gerilmesi (τ<sub>em</sub>)</label>
+                    <div id="tau-constant-display-3"
+                        style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--success-light); border: 1px solid var(--success); font-weight: 600; color: var(--success);">
+                        36 MPa (sabit)
+                    </div>
+                </div>
+            </div>
+
+            <button id="calculate-shaft-btn-3" class="btn btn-primary" style="margin-top: 1rem;">Hesapla</button>
+
+            <div id="shaft-results-3" class="results-section sr-only">
+                Md3: <span id="res-md3-shaft">-</span>,
+                Ddis: <span id="res-ddis-3">-</span>,
+                D: <span id="res-solid-d-3">-</span>
+            </div>
+
+            <div id="spline-section" class="results-section sr-only" style="margin-top: 1.25rem;">
+                <div class="section-label" style="margin-bottom: 0.75rem;">DIN 5462 Kama Profili (3. Mil)</div>
+                <p class="subtitle" style="margin-bottom: 0.75rem;">
+                    D (dolu) değerine göre en yakın alttaki nominal ölçü seçildi.
+                </p>
+                <div class="summary-strip" style="margin-bottom: 0.75rem;">
+                    <div class="summary-badge">
+                        <span class="summary-label">Nominal</span>
+                        <span class="summary-value" id="spline-label">-</span>
+                    </div>
+                    <div class="summary-badge">
+                        <span class="summary-label">Anahtar Adedi</span>
+                        <span class="summary-value" id="spline-keys">-</span>
+                    </div>
+                    <div class="summary-badge">
+                        <span class="summary-label">Merkezleme</span>
+                        <span class="summary-value" id="spline-centering">-</span>
+                    </div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>d1</th>
+                                <th>d2</th>
+                                <th>b</th>
+                                <th>D3</th>
+                                <th>e2</th>
+                                <th>f</th>
+                                <th>g</th>
+                                <th>K</th>
+                                <th>r</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="spline-d1">-</td>
+                                <td id="spline-d2">-</td>
+                                <td id="spline-b">-</td>
+                                <td id="spline-D3">-</td>
+                                <td id="spline-e2">-</td>
+                                <td id="spline-f">-</td>
+                                <td id="spline-g">-</td>
+                                <td id="spline-K">-</td>
+                                <td id="spline-r">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <a class="back-top-chip" href="#top" aria-label="Başa Dön">↑ Yukarı</a>
+    </div>
+
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/shaft_calculations.js"></script>
+</body>
+
+</html>
