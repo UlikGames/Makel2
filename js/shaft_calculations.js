@@ -42,7 +42,7 @@ const shaftData = [
 const standardLengths = [30, 40, 50, 60, 80, 110, 140, 170, 210, 250, 300, 350];
 
 // Allowable shear stress (MPa)
-const TAU_EM = 36;
+const TAU_EM = 38;
 const KEYWAY_CONSTANTS = {
     pG: 1500,
     tauOf: 380,
@@ -570,20 +570,21 @@ function calculateKeywaySizing(config) {
         return;
     }
 
-    const solidText = document.getElementById(config.summarySolidId)?.textContent
-        || document.getElementById(config.resSolidId || '')?.textContent;
-    const solidD = parseNumberFromText(solidText);
-    if (!isFinite(solidD) || solidD <= 0) {
-        alert("D (dolu) değeri bulunamadı. İlgili mil burulma hesaplarını tamamlayın.");
+    const selectedDiameterVal = document.getElementById(config.diameterId)?.value;
+    const selectedD = parseNumberFromText(selectedDiameterVal);
+
+    if (!isFinite(selectedD) || selectedD <= 0) {
+        alert("Lütfen önce ilgili mil çapını seçiniz (Mil Geometri bölümünden).");
         return;
     }
 
-    const usedD = roundUpToStep(solidD, KEYWAY_CONSTANTS.roundStep);
+    // Use the selected diameter directly
+    const usedD = selectedD;
 
-    // Use the rounded-up solid diameter to find the keyway table row
+    // Use the selected diameter to find the keyway table row
     const row = findKeywayRow(usedD);
     if (!row) {
-        alert(`D (dolu) değeri ${usedD.toFixed(3)} mm için kama tablosunda aralık bulunamadı.`);
+        alert(`Seçilen çap ${usedD.toFixed(3)} mm için kama tablosunda aralık bulunamadı.`);
         return;
     }
     const Ft = Mb / (usedD / 2);
@@ -595,7 +596,11 @@ function calculateKeywaySizing(config) {
     const Ltau380 = Ft / (KEYWAY_CONSTANTS.tauOf * row.b);
 
     const maxL = Math.max(Lpg, Ltau32, Ltau380);
+    // Round up to nearest 5 or keep as is? User asked for range validity check.
+    // Usually we still want a standard length, so rounding up to 5 makes sense for the "recommended" length.
     const roundedL = roundUpToStep(maxL, KEYWAY_CONSTANTS.roundStep);
+
+    // Clamp to min/max of the keyway standard
     const selectedL = clampToRange(roundedL, row.lMin, row.lMax);
 
     const out = config.keyway.outputs;

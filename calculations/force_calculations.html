@@ -60,35 +60,42 @@
                 <div class="input-group">
                     <label for="md1-input-force">Md<sub>1</sub> [Nmm]</label>
                     <input type="number" id="md1-input-force" step="0.001" placeholder="Normal modül Md1 (res-Md1)">
-                    <small style="color: var(--text-secondary);">Son Md<sub>1</sub>: <span id="hint-md1">-</span></small>
+                    <small style="color: var(--text-secondary);">Son Md<sub>1</sub>: <span
+                            id="hint-md1">-</span></small>
                 </div>
                 <div class="input-group">
                     <label for="d0-1-input">D<sub>0,1</sub> (Taksimat Çapı) [mm]</label>
                     <input type="number" id="d0-1-input" step="0.001" placeholder="dim-d0-1">
-                    <small style="color: var(--text-secondary);">Son D<sub>0,1</sub>: <span id="hint-d0-1">-</span></small>
+                    <small style="color: var(--text-secondary);">Son D<sub>0,1</sub>: <span
+                            id="hint-d0-1">-</span></small>
                 </div>
                 <div class="input-group">
                     <label for="d0-2-input">D<sub>0,2</sub> (Taksimat Çapı) [mm]</label>
                     <input type="number" id="d0-2-input" step="0.001" placeholder="dim-d0-2 (Fr/Fe momenti için)">
-                    <small style="color: var(--text-secondary);">Son D<sub>0,2</sub>: <span id="hint-d0-2">-</span></small>
+                    <small style="color: var(--text-secondary);">Son D<sub>0,2</sub>: <span
+                            id="hint-d0-2">-</span></small>
                 </div>
                 <div class="input-group">
                     <label for="beta0-input">β<sub>0</sub> [°]</label>
                     <input type="number" id="beta0-input" step="0.01" placeholder="İlk helis açısı (beta0)">
-                    <small style="color: var(--text-secondary);">Son β<sub>0</sub>: <span id="hint-beta0">-</span></small>
+                    <small style="color: var(--text-secondary);">Son β<sub>0</sub>: <span
+                            id="hint-beta0">-</span></small>
                 </div>
                 <div class="input-group">
                     <label>α<sub>0</sub> [°]</label>
-                    <div style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--bg-secondary); border: 1px solid var(--border-subtle);">
+                    <div
+                        style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--bg-secondary); border: 1px solid var(--border-subtle);">
                         <span id="hint-alpha">20° (sabit)</span>
                     </div>
                 </div>
             </div>
 
-            <button id="calc-force-1" class="btn btn-primary" style="margin-top: 1rem;">Ft<sub>1</sub> / Fr<sub>1</sub> / Fe<sub>1</sub> Hesapla</button>
+            <button id="calc-force-1" class="btn btn-primary" style="margin-top: 1rem;">Ft<sub>1</sub> / Fr<sub>1</sub>
+                / Fe<sub>1</sub> Hesapla</button>
         </div>
 
-        <div class="section-label" style="margin-top: 2rem;">2. Kademe Kuvvetleri (Md<sub>2</sub>, β<sub>0,2</sub>)</div>
+        <div class="section-label" style="margin-top: 2rem;">2. Kademe Kuvvetleri (Md<sub>3</sub>, β<sub>0,2</sub>)
+        </div>
         <div class="card" style="margin-top: 0.75rem;">
             <h2 style="margin-bottom: 0.5rem;">Ft<sub>2</sub>, Fr<sub>2</sub>, Fe<sub>2</sub></h2>
 
@@ -109,70 +116,49 @@
 
             <div class="form-grid">
                 <div class="input-group">
-                    <label for="md2-input-force">Md<sub>2</sub> [Nmm]</label>
-                    <input type="number" id="md2-input-force" step="0.001" placeholder="Normal modül Md2 (res-Md3)">
-                    <small style="color: var(--text-secondary);">Son Md<sub>2</sub>: <span id="hint-md2">-</span></small>
+                    <label for="md2-input-force">Md<sub>3</sub> [Nmm]</label>
+                    <input type="number" id="md2-input-force" step="0.001"
+                        placeholder="Normal modül Md3 (res-Md3-output)">
+                    <small style="color: var(--text-secondary);">Son Md<sub>3</sub>: <span
+                            id="hint-md2">-</span></small>
                 </div>
                 <div class="input-group">
                     <label for="d0-3-input">D<sub>0,3</sub> (Taksimat Çapı) [mm]</label>
                     <input type="number" id="d0-3-input" step="0.001" placeholder="dim-d0-3">
-                    <small style="color: var(--text-secondary);">Son D<sub>0,3</sub>: <span id="hint-d0-3">-</span></small>
+                    <small style="color: var(--text-secondary);">Son D<sub>0,3</sub>: <span
+                            id="hint-d0-3">-</span></small>
+                </div>
+                <div class="input-group">
+                    <label for="d0-4-input">D<sub>0,4</sub> (Taksimat Çapı) [mm]</label>
+                    <input type="number" id="d0-4-input" step="0.001" placeholder="dim-d0-4">
+                    <small style="color: var(--text-secondary);">Son D<sub>0,4</sub>: <span
+                            id="hint-d0-4">-</span></small>
                 </div>
                 <div class="input-group">
                     <label for="beta0-2-input">β<sub>0,2</sub> [°]</label>
                     <input type="number" id="beta0-2-input" step="0.01" placeholder="İkinci helis açısı (beta0_2)">
-                    <small style="color: var(--text-secondary);">Son β<sub>0,2</sub>: <span id="hint-beta0-2">-</span></small>
+                    <small style="color: var(--text-secondary);">Son β<sub>0,2</sub>: <span
+                            id="hint-beta0-2">-</span></small>
                 </div>
                 <div class="input-group">
                     <label>α<sub>0</sub> [°]</label>
-                    <div style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--bg-secondary); border: 1px solid var(--border-subtle);">
+                    <div
+                        style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--bg-secondary); border: 1px solid var(--border-subtle);">
                         20° (sabit)
                     </div>
                 </div>
             </div>
 
-            <button id="calc-force-2" class="btn btn-primary" style="margin-top: 1rem;">Ft<sub>2</sub> / Fr<sub>2</sub> / Fe<sub>2</sub> Hesapla</button>
+            <button id="calc-force-2" class="btn btn-primary" style="margin-top: 1rem;">Ft<sub>2</sub> / Fr<sub>2</sub>
+                / Fe<sub>2</sub> Hesapla</button>
         </div>
 
-        <div class="section-label" style="margin-top: 2rem;">Destek Reaksiyonları</div>
-        <div class="card" style="margin-top: 0.75rem;">
-            <h2 style="margin-bottom: 0.5rem;">F<sub>bx</sub>, F<sub>ax</sub>, F<sub>by</sub>, F<sub>ay</sub></h2>
-            <p class="subtitle" style="margin-bottom: 1.25rem;">
-                Fbx*(l1+l2+l3)+Fe<sub>2</sub>*(D<sub>0,3</sub>/2)-Fr<sub>2</sub>*(l1+l2)+Fe<sub>1</sub>*(D<sub>0,2</sub>/2)+Fr<sub>1</sub>*l1=0 <br>
-                Fax+Fr<sub>1</sub>+Fbx-Fr<sub>2</sub>=0 <br>
-                -Fby*(l1+l2+l3)+Ft<sub>2</sub>*(l1+l2)+Ft<sub>1</sub>*l1=0 <br>
-                Fay-Ft<sub>1</sub>-Ft<sub>2</sub>+Fby=0 <br>
-                Fb = √(Fbx² + Fby²), Fa = √(Fax² + Fay²)
-            </p>
 
-            <div class="summary-strip">
-                <div class="summary-badge">
-                    <span class="summary-label">F<sub>bx</sub></span>
-                    <span class="summary-value" id="res-fbx">-</span>
-                </div>
-                <div class="summary-badge">
-                    <span class="summary-label">F<sub>ax</sub></span>
-                    <span class="summary-value" id="res-fax">-</span>
-                </div>
-                <div class="summary-badge">
-                    <span class="summary-label">F<sub>by</sub></span>
-                    <span class="summary-value" id="res-fby">-</span>
-                </div>
-                <div class="summary-badge">
-                    <span class="summary-label">F<sub>ay</sub></span>
-                    <span class="summary-value" id="res-fay">-</span>
-                </div>
-                <div class="summary-badge">
-                    <span class="summary-label">F<sub>b</sub></span>
-                    <span class="summary-value" id="res-fb">-</span>
-                </div>
-                <div class="summary-badge">
-                    <span class="summary-label">F<sub>a</sub></span>
-                    <span class="summary-value" id="res-fa">-</span>
-                </div>
-            </div>
 
-            <div class="form-grid" style="margin-top: 1rem;">
+        <!-- Mesafeler (l1, l2, l3) -->
+        <div class="card" style="margin-top: 1rem;">
+            <h2 style="margin-bottom: 0.5rem;">Mesafeler</h2>
+            <div class="form-grid">
                 <div class="input-group">
                     <label for="l1-input">l<sub>1</sub> [mm]</label>
                     <input type="number" id="l1-input" step="0.001" placeholder="l1">
@@ -186,8 +172,140 @@
                     <input type="number" id="l3-input" step="0.001" placeholder="l3">
                 </div>
             </div>
+        </div>
 
-            <button id="calc-support" class="btn btn-primary" style="margin-top: 1rem;">Fbx / Fax / Fby / Fay Hesapla</button>
+        <div class="section-label" style="margin-top: 2rem;">Destek Reaksiyonları</div>
+
+        <!-- 1. Destek: Fh ve Fj -->
+        <div class="card" style="margin-top: 0.75rem;">
+            <h2 style="margin-bottom: 0.5rem;">1. Destek: F<sub>h</sub> ve F<sub>j</sub></h2>
+            <p class="subtitle" style="margin-bottom: 1.25rem;">
+                F<sub>jx</sub>*(l1+l2+l3) - Fr<sub>1</sub>*l1 - Fe<sub>1</sub>*(D<sub>01</sub>/2) = 0 → F<sub>jx</sub>
+                bulunur <br>
+                F<sub>hx</sub> + F<sub>jx</sub> - Fr<sub>1</sub> = 0 → F<sub>hx</sub> bulunur <br>
+                Ft<sub>1</sub>*l1 - F<sub>jy</sub>*(l1+l2+l3) = 0 → F<sub>jy</sub> bulunur <br>
+                Ft<sub>1</sub> - F<sub>hy</sub> - F<sub>jy</sub> = 0 → F<sub>hy</sub> bulunur <br>
+                F<sub>j</sub> = √(F<sub>jx</sub>² + F<sub>jy</sub>²), F<sub>h</sub> = √(F<sub>hx</sub>² +
+                F<sub>hy</sub>²)
+            </p>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>jx</sub></span>
+                    <span class="summary-value" id="res-fjx">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>hx</sub></span>
+                    <span class="summary-value" id="res-fhx">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>jy</sub></span>
+                    <span class="summary-value" id="res-fjy">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>hy</sub></span>
+                    <span class="summary-value" id="res-fhy">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>j</sub></span>
+                    <span class="summary-value" id="res-fj">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>h</sub></span>
+                    <span class="summary-value" id="res-fh">-</span>
+                </div>
+            </div>
+
+            <button id="calc-support-1" class="btn btn-primary" style="margin-top: 1rem;">F<sub>h</sub> / F<sub>j</sub>
+                Hesapla</button>
+        </div>
+
+        <!-- 2. Destek: Fk ve Fl -->
+        <div class="card" style="margin-top: 1rem;">
+            <h2 style="margin-bottom: 0.5rem;">2. Destek: F<sub>k</sub> ve F<sub>l</sub></h2>
+            <p class="subtitle" style="margin-bottom: 1.25rem;">
+                F<sub>lx</sub>*(l1+l2+l3) - Fe<sub>2</sub>*(D<sub>03</sub>/2) - Fr<sub>2</sub>*(l1+l2) +
+                Fr<sub>1</sub>*l1 - Fe<sub>1</sub>*(D<sub>02</sub>/2) = 0 → F<sub>lx</sub> bulunur <br>
+                F<sub>lx</sub> + Fr<sub>1</sub> - Fr<sub>2</sub> - F<sub>kx</sub> = 0 → F<sub>kx</sub> bulunur <br>
+                F<sub>ly</sub>*(l1+l2+l3) - Ft<sub>2</sub>*(l1+l2) - Ft<sub>1</sub>*l1 = 0 → F<sub>ly</sub> bulunur <br>
+                F<sub>ky</sub> + F<sub>ly</sub> - Ft<sub>1</sub> - Ft<sub>2</sub> = 0 → F<sub>ky</sub> bulunur <br>
+                F<sub>l</sub> = √(F<sub>lx</sub>² + F<sub>ly</sub>²), F<sub>k</sub> = √(F<sub>kx</sub>² +
+                F<sub>ky</sub>²)
+            </p>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>lx</sub></span>
+                    <span class="summary-value" id="res-flx">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>kx</sub></span>
+                    <span class="summary-value" id="res-fkx">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>ly</sub></span>
+                    <span class="summary-value" id="res-fly">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>ky</sub></span>
+                    <span class="summary-value" id="res-fky">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>l</sub></span>
+                    <span class="summary-value" id="res-fl">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>k</sub></span>
+                    <span class="summary-value" id="res-fk">-</span>
+                </div>
+            </div>
+
+            <button id="calc-support-2" class="btn btn-primary" style="margin-top: 1rem;">F<sub>k</sub> / F<sub>l</sub>
+                Hesapla</button>
+        </div>
+
+        <!-- 3. Destek: Fm ve Fn -->
+        <div class="card" style="margin-top: 1rem;">
+            <h2 style="margin-bottom: 0.5rem;">3. Destek: F<sub>m</sub> ve F<sub>n</sub></h2>
+            <p class="subtitle" style="margin-bottom: 1.25rem;">
+                F<sub>nx</sub>*(l1+l2+l3) + Fr<sub>2</sub>*(l1+l2) - Fe<sub>2</sub>*(D<sub>04</sub>/2) = 0 →
+                F<sub>nx</sub> bulunur <br>
+                F<sub>nx</sub> + Fr<sub>2</sub> - F<sub>mx</sub> = 0 → F<sub>mx</sub> bulunur <br>
+                Fr<sub>2</sub>*(l1+l2) - F<sub>ny</sub>*(l1+l2+l3) = 0 → F<sub>ny</sub> bulunur <br>
+                Fr<sub>2</sub> - F<sub>my</sub> - F<sub>ny</sub> = 0 → F<sub>my</sub> bulunur <br>
+                F<sub>n</sub> = √(F<sub>nx</sub>² + F<sub>ny</sub>²), F<sub>m</sub> = √(F<sub>mx</sub>² +
+                F<sub>my</sub>²)
+            </p>
+
+            <div class="summary-strip">
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>nx</sub></span>
+                    <span class="summary-value" id="res-fnx">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>mx</sub></span>
+                    <span class="summary-value" id="res-fmx">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>ny</sub></span>
+                    <span class="summary-value" id="res-fny">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>my</sub></span>
+                    <span class="summary-value" id="res-fmy">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>n</sub></span>
+                    <span class="summary-value" id="res-fn">-</span>
+                </div>
+                <div class="summary-badge">
+                    <span class="summary-label">F<sub>m</sub></span>
+                    <span class="summary-value" id="res-fm">-</span>
+                </div>
+            </div>
+
+            <button id="calc-support-3" class="btn btn-primary" style="margin-top: 1rem;">F<sub>m</sub> / F<sub>n</sub>
+                Hesapla</button>
         </div>
     </div>
 

@@ -34,6 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
             calculateGearDimensions();
         });
     }
+
+    // Add event listener for Z4 dropdown
+    const z4Select = document.getElementById('z4-select');
+    if (z4Select) {
+        z4Select.addEventListener('change', () => {
+            calculateGearDimensions();
+        });
+    }
 });
 
 function calculateNormalModule() {
@@ -253,6 +261,9 @@ function calculateNormalModule() {
         document.getElementById('res-mn4').textContent = mn4.toFixed(3);
         document.getElementById('res-Md3-output').textContent = Md3Base.toFixed(0) + " Nmm";
 
+        // Populate Z4 Dropdown (Range +/- 5)
+        populateZ4Dropdown(z4);
+
         // 6. Populate Standard Module Dropdown for Stage 2
         const maxMn2 = Math.max(mn3, mn4);
         const select2 = document.getElementById('standard-module-select-2');
@@ -317,9 +328,15 @@ function calculateGearDimensions() {
     const beta0Deg_2 = parseFloat(document.getElementById('beta0_2').value);
     const psi = parseFloat(document.getElementById('psi').value);
 
-    // Get calculated z4
-    const z4Text = document.getElementById('res-z4').textContent;
-    const z4 = parseInt(z4Text);
+    // Get calculated z4 from dropdown if available, otherwise from result text
+    let z4;
+    const z4Select = document.getElementById('z4-select');
+    if (z4Select && z4Select.value && z4Select.value !== '-') {
+        z4 = parseInt(z4Select.value);
+    } else {
+        const z4Text = document.getElementById('res-z4').textContent;
+        z4 = parseInt(z4Text);
+    }
 
     if ([z1, z2, z3, z4, beta0Deg_1, beta0Deg_2, psi, m1, m2].some(isNaN)) {
         return;
@@ -372,7 +389,9 @@ function calculateGearDimensions() {
         document.getElementById(`dim-df-${gearNum}`).textContent = df.toFixed(3);
         document.getElementById(`dim-db-${gearNum}`).textContent = db.toFixed(3);
         document.getElementById(`dim-b-${gearNum}`).textContent = b.toFixed(3);
-        document.getElementById(`dim-z-${gearNum}`).textContent = gear.z;
+        if (gearNum !== 4) {
+            document.getElementById(`dim-z-${gearNum}`).textContent = gear.z;
+        }
         document.getElementById(`dim-m-${gearNum}`).textContent = gear.m;
         document.getElementById(`dim-beta-${gearNum}`).textContent = gear.beta.toFixed(4);
 
@@ -384,6 +403,8 @@ function calculateGearDimensions() {
                 localStorage.setItem('lastD0_2', d0.toFixed(3));
             } else if (gearNum === 3) {
                 localStorage.setItem('lastD0_3', d0.toFixed(3));
+            } else if (gearNum === 4) {
+                localStorage.setItem('lastD0_4', d0.toFixed(3));
             }
         }
     });
@@ -406,4 +427,24 @@ function calculateGearDimensions() {
 
     // Show the dimensions table
     document.getElementById('gear-dimensions-section').style.display = 'block';
+}
+
+function populateZ4Dropdown(z4) {
+    const z4Select = document.getElementById('z4-select');
+    if (!z4Select || !isFinite(z4)) return;
+
+    z4Select.innerHTML = '';
+    const startZ4 = Math.max(1, z4 - 5); // Ensure positive teeth
+    const endZ4 = z4 + 5;
+
+    for (let z = startZ4; z <= endZ4; z++) {
+        const option = document.createElement('option');
+        option.value = z;
+        option.textContent = z;
+        if (z === z4) {
+            option.selected = true;
+            option.textContent += " (Hesaplanan)";
+        }
+        z4Select.appendChild(option);
+    }
 }
